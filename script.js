@@ -23,6 +23,22 @@
 // NEWS API
 const apiKey = 'c432f053df844de99a0e1a43560c6ef6';
 
-fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`)
+fetch(`https://newsapi.org/v2/everything?q=bitcoin&apiKey=${apiKey}`)
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => {
+        const container = document.createElement('div');
+        const list = document.createElement('ul');
+            
+        data.articles.forEach(article => {
+            console.log(article);
+            const articleAuthor = document.createElement('li');
+            articleAuthor.textContent = article.author;
+            let viewList = list.appendChild(articleAuthor);
+            // console.log(viewList);
+        })
+        container.appendChild(list);
+        document.body.appendChild(container)
+    })
+    .catch(error => {
+        console.log("Error fetching data" + error);
+    })
